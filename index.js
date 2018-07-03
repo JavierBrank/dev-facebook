@@ -1,6 +1,7 @@
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
+ //de.facebok
  //INDEX OPENSHIFT//INDEX OPENSHIFT
  //INDEX OPENSHIFT//INDEX OPENSHIFT
  //INDEX OPENSHIFT//INDEX OPENSHIFT
@@ -35,13 +36,14 @@ app.get('/', function(req, res) {
   res.end('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
 
-app.get(['/facebook', '/instagram'], function(req, res) {   
+app.get('/facebooK', function(req, res) {   
   if (
     req.param('hub.mode') == 'subscribe' &&
     req.param('hub.verify_token') == token
   ) {
     res.send(req.param('hub.challenge'));
   } else {
+    res.write('La solicitud GET es incorrecta, verificar campos enviados');
     res.sendStatus(400);
   }
 });
