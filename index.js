@@ -1,17 +1,23 @@
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
- *
+ //INDEX OPENSHIFT//INDEX OPENSHIFT
+ //INDEX OPENSHIFT//INDEX OPENSHIFT
+ //INDEX OPENSHIFT//INDEX OPENSHIFT
+ //INDEX OPENSHIFT//INDEX OPENSHIFT
+ //INDEX OPENSHIFT//INDEX OPENSHIFT
+ //INDEX OPENSHIFT//INDEX OPENSHIFT
+ //INDEX OPENSHIFT//INDEX OPENSHIFT
  * This source code is licensed under the license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
+//INDEX OPENSHIFT
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 var xhub = require('express-x-hub');
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 8080));
 app.listen(app.get('port'));
 
 app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
@@ -22,7 +28,11 @@ var received_updates = [];
 
 app.get('/', function(req, res) {
   console.log(req);
-  res.send('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
+  res.write('<pre> process.env.PORT:' + process.env.PORT + '</pre>');
+  res.write('<pre> process.env.PORT:' + process.env.APP_SECRET + '</pre>');
+  res.write('<pre> process.env.TOKEN:' + process.env.TOKEN + '</pre>');
+  res.write('<pre>process.env.ELEPHANTSQL_URL:' + process.env.ELEPHANTSQL_URL + '</pre>');
+  res.end('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
 
 app.get(['/facebook', '/instagram'], function(req, res) {   
