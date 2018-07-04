@@ -33,10 +33,12 @@ var received_updates = [];
 app.get('/', function(req, res) {
  //console.log(req);
   res.write('<pre> process.env.PORT:' + process.env.PORT + '</pre>');
-  res.write('<pre> process.env.PORT:' + process.env.APP_SECRET + '</pre>');
+  res.write('<pre> process.env.APP_SECRET:' + process.env.APP_SECRET + '</pre>');
   res.write('<pre> process.env.TOKEN:' + process.env.TOKEN + '</pre>');
   res.write('<pre>process.env.ELEPHANTSQL_URL:' + process.env.ELEPHANTSQL_URL + '</pre>');
+  res.write('<pre> req.body:' + req.body + '</pre>');
   res.end('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
+  
 });
 
 app.get('/facebook', function(req, res) {   
@@ -55,20 +57,20 @@ app.get('/facebook', function(req, res) {
 
 app.post('/facebook', function(req, res) {
   console.log('Facebook request body:', req.body);
-  
+  /*
   if (!req.isXHubValid()) {
     console.log('Warning - request header X-Hub-Signature not present or invalid');
     res.sendStatus(401);
     return;
   }
-
+*/
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
 
-  //received_updates.unshift(req.body);
+  received_updates.unshift(req.body);
     json = query.insertarJSON(req.body);
-    res.write('<pre> process.env.PORT:' + req.body + '</pre>');
-    res.status(200).end();
+   
+    res.sendStatus(200);
 });
 
 app.listen();
