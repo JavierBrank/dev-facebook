@@ -19,7 +19,8 @@ var app = express();
 var xhub = require('express-x-hub');
 var query = require('./modulos/db');
 const { Pool, Client } = require('pg');
-const connectionString = 'postgres://waghcyct:VrnvqmW15dYT_403BOoGt8ckvUkWdljU@tantor.db.elephantsql.com:5432/waghcyct';
+const connectionString =  'postgres://admin:admin@10.30.0.231:5432/db_inscripcion';
+//const connectionString = 'postgres://waghcyct:VrnvqmW15dYT_403BOoGt8ckvUkWdljU@tantor.db.elephantsql.com:5432/waghcyct';
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'), () => {
   console.log("Aplicacion DEV-FACEBOOK corriendo en puerto", app.get('port'))
@@ -78,8 +79,8 @@ var client = new Client({
   connectionString: connectionString,
 })
 client.connect()
-
-client.query("insert into tbface_log (fecha, json_data) VALUES (now(),'"+req.body+"');",
+var queryInsert = "insert into tbface_log (fecha, json_data ) VALUES (now(),'"+req.body+"');";
+client.query(queryInsert,
  (err, res) => {
   console.log(err, res)
   client.end()
