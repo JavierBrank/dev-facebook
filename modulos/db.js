@@ -25,7 +25,7 @@ module.exports.insertarJSON = function(valor){
             ok = "query ok:";
           }
 
-          var queryInsert = crearQuery();
+          var queryInsert = crearQuery(reqbody);
           if (!queryInsert){
             //  res.send('<pre>La variable esta vacia: '+ err +'</pre>');
             ok = "la variable esta vacia";
@@ -58,14 +58,13 @@ module.exports.insertarJSON = function(valor){
 
 
 }
-const crearQuery = () => {
+const crearQuery = (jsondata) => {
     //var obj = JSON.parse(received_updates);
-    if (reqbody){
+    if (jsondata){
 
 
-      detalle = "Javi: Mensaje entarnte";
-      var id_log = unshift(req.body);
-      var insert = "INSERT INTO tbface_log(fecha, json_data, estado, detalle) VALUES (now(), '"+reqbody+"', null, '"+detalle+"' );";
+      var detalle = "Javi: Mensaje entarnte";
+      var insert = "INSERT INTO tbface_log(fecha, json_data, estado, detalle) VALUES (now(), '"+jsondata+"', null, '"+detalle+"' );";
       //var insert = "INSERT INTO tbface_log(fecha, id_page, json_data, saliente, estado, detalle) VALUES (now(), '"+id_page+"', '"+json+"',"+saliente+", "+estado+",'"+detalle+"' );";
        return insert;
     }else{
