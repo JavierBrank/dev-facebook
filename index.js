@@ -17,7 +17,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 var xhub = require('express-x-hub');
-//var query = require('./modulos/db');
+var query = require('./modulos/db');
 const { Pool, Client } = require('pg');
 //const connectionString =  'postgres://admin:admin@10.30.0.231:5432/db_inscripcion';
 const connectionString = 'postgres://waghcyct:VrnvqmW15dYT_403BOoGt8ckvUkWdljU@tantor.db.elephantsql.com:5432/waghcyct';
@@ -33,7 +33,7 @@ var token = process.env.TOKEN || 'token';
 var received_updates = [];
 
 app.get('/', function(req, res) {
- //console.log(req);
+// console.log(req);
   res.write('<pre> process.env.PORT:' + process.env.PORT + '</pre>');
   res.write('<pre> process.env.APP_SECRET:' + process.env.APP_SECRET + '</pre>');
   res.write('<pre> process.env.TOKEN:' + process.env.TOKEN + '</pre>');
