@@ -1,20 +1,23 @@
 
 module.exports.insertarJSON = function(valor){
       
-
+  console.log("00000000000000000000000");
     var reqbody   =   valor;
     var pg        =   require('pg');
     var sqlString =   require('sqlstring');
     //var conString =   require('conf-postgresql').PGURL 
-    var conString =   require('./conf').PGURL ;    
+    var conString =   process.env.ELEPHANTSQL_URL || "postgres://waghcyct:VrnvqmW15dYT_403BOoGt8ckvUkWdljU@tantor.db.elephantsql.com:5432/waghcyct" ;    
     
-    var ejecutarQuery = function(error, dato){
-  
+
+
+    
+    var ejecutarQuery = function(dato){
+        
           var ok = "nada";
           var client = new pg.Client(conString);
 
       client.connect(function(err){
- 
+          console.log("111111111111111111111111111");
           if(err) {
             ok = "No es posible conectar con postgres:";
             return ok;
@@ -25,7 +28,7 @@ module.exports.insertarJSON = function(valor){
             ok = "query ok:";
           }
 
-          var queryInsert = crearQuery(reqbody);
+          var queryInsert = crearQuery(dato);
           if (!queryInsert){
             //  res.send('<pre>La variable esta vacia: '+ err +'</pre>');
             ok = "la variable esta vacia";
@@ -73,7 +76,7 @@ const crearQuery = (jsondata) => {
     }
     
 }
-
+var error = ejecutarQuery(reqbody);
 };
 
 
