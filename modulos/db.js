@@ -8,7 +8,8 @@ module.exports.insertarJSON = function(valor){
 
 var pg        =   require('pg');
 var sqlString =   require('sqlstring');
-var conString =   require('conf-postgresql').PGURL;
+var conString =   require('conf-postgresql').PGURL || require('./modulos/conf').PGURL || require('./conf').PGURL ;
+
 
 
 var ejecutarQuery = function(error, dato){
