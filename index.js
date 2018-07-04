@@ -36,7 +36,7 @@ app.get('/', function(req, res) {
   res.write('<pre> process.env.APP_SECRET:' + process.env.APP_SECRET + '</pre>');
   res.write('<pre> process.env.TOKEN:' + process.env.TOKEN + '</pre>');
   res.write('<pre>process.env.ELEPHANTSQL_URL:' + process.env.ELEPHANTSQL_URL + '</pre>');
-  res.write('<pre> req.body:' + req.body + '</pre>');
+  
   res.end('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
   
 });
