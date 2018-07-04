@@ -9,7 +9,7 @@ module.exports.insertarJSON = function(valor){
 var pg        =   require('pg');
 var sqlString =   require('sqlstring');
 //var conString =   require('conf-postgresql').PGURL 
-var conString =   require('./conf').PGUR ;
+var conString =   require('./conf').PGURL ;    
 
 
 
