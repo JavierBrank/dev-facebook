@@ -18,7 +18,8 @@ var express = require('express');
 var app = express();
 var xhub = require('express-x-hub');
 var query = require('./modulos/db');
-
+const { Pool, Client } = require('pg');
+const connectionString = 'postgres://waghcyct:VrnvqmW15dYT_403BOoGt8ckvUkWdljU@tantor.db.elephantsql.com:5432/waghcyct';
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'), () => {
   console.log("Aplicacion DEV-FACEBOOK corriendo en puerto", app.get('port'))
@@ -64,13 +65,35 @@ app.post('/facebook', function(req, res) {
     return;
   }
 */
+var pool = new Pool({
+  connectionString: connectionString,
+})
+
+pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res)
+  pool.end()
+})
+
+var client = new Client({
+  connectionString: connectionString,
+})
+client.connect()
+
+client.query("insert into tbface_log (fecha, json_data) VALUES (now(),'"+req.body+"');",
+ (err, res) => {
+  console.log(err, res)
+  client.end()
+})
+
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
 
   received_updates.unshift(req.body);
-    json = query.insertarJSON(req.body);
+    //json = query.insertarJSON(req.body);
    
     res.sendStatus(200);
 });
+
+
 
 app.listen();
