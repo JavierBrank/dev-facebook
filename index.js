@@ -17,7 +17,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 var xhub = require('express-x-hub');
-var query = require('./modulos/db');
+//var query = require('./modulos/db');
 const { Pool, Client } = require('pg');
 //const connectionString =  'postgres://admin:admin@10.30.0.231:5432/db_inscripcion';
 const connectionString = 'postgres://waghcyct:VrnvqmW15dYT_403BOoGt8ckvUkWdljU@tantor.db.elephantsql.com:5432/waghcyct';
@@ -66,25 +66,18 @@ app.post('/facebook', function(req, res) {
     return;
   }
 */
-var pool = new Pool({
-  connectionString: connectionString,
-})
-
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
 
 var client = new Client({
   connectionString: connectionString,
-})
-client.connect()
-var queryInsert = "insert into tbface_log (fecha, json_data ) VALUES (now(),'"+req.body+"');";
+});
+client.connect();
+var queryInsert = "insert into tbface_log (fecha, json_data ) VALUES (now(),'"+JSON.stringify(req.body, null, 2)+"');";
 client.query(queryInsert,
  (err, res) => {
-  console.log(err, res)
-  client.end()
-})
+  console.log(err, res);
+  client.end();
+});
+
 
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
