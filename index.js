@@ -82,8 +82,8 @@ client.query(queryInsert,
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
 
-  received_updates.unshift(req.body);
-    //json = query.insertarJSON(req.body);
+  
+    json = query.insertarJSON(received_updates.unshift(req.body));
    
     res.sendStatus(200);
 });

@@ -14,55 +14,66 @@ module.exports.insertarJSON = function(valor){
     var ejecutarQuery = function(dato){
         
           var ok = "nada";
-          var client = new pg.Client(conString);
+          var client = new pg.Client({
+             connectionString: conString,
+          });
 
-      client.connect(function(err){
-          console.log("111111111111111111111111111");
-          if(err) {
-            ok = "No es posible conectar con postgres:";
-             console.log(ok);
-            return ok;
-           
-            //res.send('<pre>No es posible conectar con postgres: '+ err +'</pre>');
-            return console.error('No es posible conectar con postgres:', err);
+          client.connect(function(err){
+
+            if(err) {
+
+              ok = "No es posible conectar con postgres:";
+              console.log(ok);
+              return ok;
+              //res.send('<pre>No es posible conectar con postgres: '+ err +'</pre>');
+              return console.error('No es posible conectar con postgres:', err);
           }else {
             ok = "CONECTADO CON PSOTGRESQL:";
             console.log(ok);
           }
 
-          var queryInsert = crearQuery(dato);
-          if (!queryInsert){
-            //  res.send('<pre>La variable esta vacia: '+ err +'</pre>');
-            ok = "la variable esta vacia";
-            console.log(ok);
-            return ok;
-            return console.error('la variable esta vacia:', err);
-          }
-        else
-            {
-              ok = "query ok ok ";
-              console.log(ok);
-            }
-              client.query(queryInsert, function(err, result) {
-                if(err) {
-                  ok = "Error corriendo la queryInsert";
-                  console.log(ok, err);
-                  return ok;
-                 // res.send('<pre>Error corriendo la queryInsert: '+ err +'</pre>');
-                  return console.error('Error corriendo la queryInsert:', err);
-                }else {
-                  ok = "query ok ok  ok";
-                  console.log(ok);
-                }
+          var queryInsert = crearQuery(dato, function (){
+
+                  if (!queryInsert){
+            
+                      client.end();
+                      ok = "la variable esta vacia";
+                      console.log(ok);
+                      return ok;
+                    }
+                  else
+                    {
+                      ok = "query ok ok ";
+                      console.log(ok);
+                    }
+                  client.query(queryInsert, function(err, result) {
+
+                        if(err) {
+                          ok = "Error corriendo la queryInsert";
+                          console.log(ok, err);
+                          return ok;
+                         // res.send('<pre>Error corriendo la queryInsert: '+ err +'</pre>');
+                          return console.error('Error corriendo la queryInsert:', err);
+                        }else {
+                          ok = "query ok ok  ok";
+                          console.log(ok);
+                        }
                
               //  res.send('<pre> corriendo la queryInsert: ' + JSON.stringify(result) + '</pre>')
                 //console.log(result.rows[0].theTime);
                 //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
                 
                 client.end();
-                
+                return ok;
               });
-              return ok;
+
+
+
+
+
+          });
+        
+             
             });
 
 
