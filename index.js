@@ -70,6 +70,31 @@ app.get('/resetlog', function(req, res) {
 });
 
 app.post('/facebook', function(req, res) {
+  req.body ={
+    "object": "page",
+    "entry": [
+      {
+        "id": "159709944504329",
+        "time": 1530822744284,
+        "messaging": [
+          {
+            "sender": {
+              "id": "1475559052473293"
+            },
+            "recipient": {
+              "id": "159709944504329"
+            },
+            "timestamp": 1530822744046,
+            "message": {
+              "mid": "PEYG_Xv4SFROfufFejtnSI6YZM1p8gWrrpUaRBsxRqK7XUwY8HcrLgvhoK2wIqK2PQprwsYzCjcCcB6hGRyKPA",
+              "seq": 231,
+              "text": "npm start"
+            }
+          }
+        ]
+      }
+    ]
+  };  
   console.log('Facebook request body:', req.body);
   /*
   if (!req.isXHubValid()) {
@@ -97,6 +122,7 @@ client.query(queryInsert,
     received_updates.unshift(req.body)
     valor_de_jsonb = jsonb.indentificarJSON(req.body, function(devolucion){
         console.log(devolucion);
+        logs.unshift(devolucion);
     });
     console.log(valor_de_jsonb);
     query.insertarJSON(req.body, function(valor){

@@ -84,7 +84,7 @@ function crearQuery(jsondata, devolucion){
     if (jsondata){
 
 
-      var detalle = "Javi: Mensaje entarnte";
+      var detalle = "jueves 17:47";
       var insert = "INSERT INTO tbface_log(fecha, json_data, estado, detalle) VALUES (now(), '"+jsondata+"', null, '"+detalle+"' );";
       //var insert = "INSERT INTO tbface_log(fecha, id_page, json_data, saliente, estado, detalle) VALUES (now(), '"+id_page+"', '"+json+"',"+saliente+", "+estado+",'"+detalle+"' );";
        console.log("insert", insert);
