@@ -18,6 +18,8 @@ var express = require('express');
 var app = express();
 var xhub = require('express-x-hub');
 var query = require('./modulos/db');
+var jsonb = require('./modulos/recorrerjson');
+
 const { Pool, Client } = require('pg');
 //const connectionString =  'postgres://admin:admin@10.30.0.231:5432/db_inscripcion';
 const connectionString = 'postgres://waghcyct:VrnvqmW15dYT_403BOoGt8ckvUkWdljU@tantor.db.elephantsql.com:5432/waghcyct';
@@ -31,6 +33,7 @@ app.use(bodyParser.json());
 
 var token = process.env.TOKEN || 'token';
 var received_updates = [];
+var logs = [];
 
 app.get('/', function(req, res) {
 // console.log(req);
@@ -39,7 +42,8 @@ app.get('/', function(req, res) {
   res.write('<pre> process.env.TOKEN:' + process.env.TOKEN + '</pre>');
   res.write('<pre>process.env.ELEPHANTSQL_URL:' + process.env.ELEPHANTSQL_URL + '</pre>');
   
-  res.end('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
+  res.write('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
+  res.end('<pre>' + JSON.stringify(logs, null, 2) + '</pre>');
   
 });
 
@@ -56,6 +60,14 @@ app.get('/facebook', function(req, res) {
   }
 
 });
+app.get('/resetlog', function(req, res) {   
+
+  
+  logs = [];
+  res.write("Variable LOG reseteada");
+  res.end();
+
+});
 
 app.post('/facebook', function(req, res) {
   console.log('Facebook request body:', req.body);
@@ -66,7 +78,7 @@ app.post('/facebook', function(req, res) {
     return;
   }
 */
-
+/*
 var client = new Client({
   connectionString: connectionString,
 });
@@ -78,14 +90,20 @@ client.query(queryInsert,
   client.end();
 });
 
-
+*/
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
 
-  
-    json = query.insertarJSON(received_updates.unshift(req.body));
+    received_updates.unshift(req.body)
+    valor_de_jsonb = jsonb.indentificarJSON(req.body, function(devolucion){
+        console.log(devolucion);
+    });
+    console.log(valor_de_jsonb);
+    query.insertarJSON(req.body, function(valor){
+      logs.unshift(valor);
+    });
    
-    res.sendStatus(200);
+    res.sendStatus(200, 'okey');
 });
 
 

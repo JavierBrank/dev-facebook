@@ -1,19 +1,20 @@
 
-module.exports.insertarJSON = function(valor){
+module.exports.insertarJSON = function(valor, retorno){
       
-  console.log("00000000000000000000000");
-    var reqbody   =   valor;
+      funcion_retorno=retorno;
+
+      var reqbody   =   valor;
     var pg        =   require('pg');
     var sqlString =   require('sqlstring');
     //var conString =   require('conf-postgresql').PGURL 
     var conString =   process.env.ELEPHANTSQL_URL || "postgres://admin:admin@10.30.0.231:5432/db_inscripcion" ;    
-    
+   
 
-
-    
-    var ejecutarQuery = function(dato){
+  ejecutarQuery(reqbody, funcion_retorno);
+  function ejecutarQuery(dato, cargarlog){
         
-          var ok = "nada";
+         
+          cargarlog({"Dentro de funcion ejecutarQuery()" : "OK"});
           var client = new pg.Client({
              connectionString: conString,
           });
@@ -22,21 +23,19 @@ module.exports.insertarJSON = function(valor){
 
 
             if(err) {
+            
+            cargarlog({"Client.connect() No es posible conectar con postgres " : err});
+            console.log("Client.connect() No es posible conectar con postgres ");
+            return err;
 
-
-            ok = "No es posible conectar con postgres:";
-            console.log(ok);
-            return ok;
-            //res.send('<pre>No es posible conectar con postgres: '+ err +'</pre>');
-            return console.error('No es posible conectar con postgres:', err);
             }else {
 
-              ok = "CONECTADO CON PSOTGRESQL:";
-              console.log(ok);
+              cargarlog({"Client.connect() Conectado con postgres " : "OK"});
+              console.log("Client.connect() Conectado con postgres ");
               }
 
 
-              var queryInsert = crearQuery(dato, function (queryparainsertar){
+              var queryInsert = crearQuery(dato, function(queryparainsertar){
 
                 console.log("dentro de la funcion de crear query");
                 if (!queryparainsertar){
@@ -100,7 +99,6 @@ function crearQuery(jsondata, devolucion){
     }
     return false;
 }
-var error = ejecutarQuery(reqbody);
 };
 
 
