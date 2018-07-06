@@ -28,7 +28,6 @@
   ],
   "license": "https://github.com/JavierBrank/dev-facebook/blob/master/LICENSE",
   "bugs": "https://github.com/JavierBrank/dev-facebook/issues",
-  "devDependencies": {
-    "nodemon": "^1.17.5"
+  
   }
 }
